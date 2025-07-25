@@ -6,36 +6,42 @@
     <link rel="stylesheet" th:href="@{/style.css}" href="/style.css"/>
 </head>
 <body>
-<h1>Add New Computer</h1>
-<form th:action="@{/computers/add}" th:object="${computer}" method="post">
-    <div>
-        <label>Model:</label>
-        <input type="text" th:field="*{computer_model}" required />
-        <span th:if="${#fields.hasErrors('computer_model')}" th:errors="*{computer_model}"></span>
+<div class="main-center-wrapper">
+    <div class="form-container">
+        <h1>Add New Computer</h1>
+        <form th:action="@{/computers/add}" th:object="${computer}" method="post">
+            <div>
+                <label>Model:</label>
+                <input type="text" th:field="*{computer_model}" required minlength="5" maxlength="50" />
+                <span th:if="${#fields.hasErrors('computer_model')}" th:errors="*{computer_model}" class="error"></span>
+            </div>
+            <div>
+                <label>Type:</label>
+                <input type="text" th:field="*{type}" required minlength="2" maxlength="50" />
+                <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="error"></span>
+            </div>
+            <div>
+                <label>Production Year:</label>
+                <input type="number" th:field="*{production_year}" required min="1990" max="2024" />
+                <span th:if="${#fields.hasErrors('production_year')}" th:errors="*{production_year}" class="error"></span>
+            </div>
+            <div>
+                <label>Price:</label>
+                <input type="number" step="0.01" th:field="*{price}" required min="100" max="100000" />
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></span>
+            </div>
+            <div>
+                <label>Manufacturer:</label>
+                <select th:field="*{manufacturer}" required>
+                    <option value="">-- Select Manufacturer --</option>
+                    <option th:each="m : ${manufacturers}" th:value="${m.manufacturer_id}" th:text="${m.manufacturer_name}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('manufacturer')}" th:errors="*{manufacturer}" class="error"></span>
+            </div>
+            <button type="submit">Add Computer</button>
+        </form>
+        <a th:href="@{/home}" class="back-link">Back to List</a>
     </div>
-    <div>
-        <label>Type:</label>
-        <input type="text" th:field="*{type}" required />
-        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
-    </div>
-    <div>
-        <label>Production Year:</label>
-        <input type="number" th:field="*{production_year}" required />
-        <span th:if="${#fields.hasErrors('production_year')}" th:errors="*{production_year}"></span>
-    </div>
-    <div>
-        <label>Price:</label>
-        <input type="number" step="0.01" th:field="*{price}" required />
-        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-    </div>
-    <div>
-        <label>Manufacturer:</label>
-        <select th:field="*{manufacturer}" required>
-            <option th:each="m : ${manufacturers}" th:value="${m}" th:text="${m.manufacturer_name}"></option>
-        </select>
-    </div>
-    <button type="submit">Add Computer</button>
-</form>
-<a th:href="@{/home}">Back to List</a>
+</div>
 </body>
 </html> 

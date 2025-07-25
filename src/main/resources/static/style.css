@@ -61,7 +61,7 @@ label {
     font-weight: 500;
 }
 
-input[type="text"], input[type="date"], input[type="password"], select {
+input[type="text"], input[type="date"], input[type="password"], input[type="number"], select {
     width: 100%;
     padding: 7px 10px;
     border-radius: 5px;
@@ -73,9 +73,18 @@ input[type="text"], input[type="date"], input[type="password"], select {
     box-sizing: border-box;
 }
 
-input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus, select:focus {
+input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus, input[type="number"]:focus, select:focus {
     outline: 2px solid #02CAA9;
     background: #fffde7;
+}
+
+/* Error message styles */
+.error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-weight: 500;
 }
 
 button, .btn {

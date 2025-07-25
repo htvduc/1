@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import java.math.BigDecimal;
@@ -54,6 +55,7 @@ public class ComputerController {
 
     @PostMapping("/computers/add")
     public String addComputer(@Valid @ModelAttribute("computer") Computer computer,
+                             @RequestParam(value = "manufacturer", required = false) Integer manufacturerId,
                              BindingResult result,
                              HttpSession session,
                              Model model) {
@@ -62,18 +64,37 @@ public class ComputerController {
             model.addAttribute("error", "You don't have permission to access this function");
             return "error";
         }
+        
+        // Set manufacturer from ID
+        if (manufacturerId != null) {
+            Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElse(null);
+            if (manufacturer == null) {
+                result.rejectValue("manufacturer", null, "Invalid manufacturer selected");
+            } else {
+                computer.setManufacturer(manufacturer);
+            }
+        }
+        
         // Validate các trường theo yêu cầu đề bài
         if (computer.getComputer_model() == null || computer.getComputer_model().isBlank()
                 || computer.getComputer_model().length() < 5 || computer.getComputer_model().length() > 50) {
             result.rejectValue("computer_model", null, "Model length must be between 5 and 50 characters");
         }
-        if (computer.getPrice() == null || computer.getPrice().compareTo(BigDecimal.valueOf(100)) < 0) {
-            result.rejectValue("price", null, "Price must be >= 100");
+        if (computer.getType() == null || computer.getType().isBlank()
+                || computer.getType().length() < 2 || computer.getType().length() > 50) {
+            result.rejectValue("type", null, "Type length must be between 2 and 50 characters");
+        }
+        if (computer.getPrice() == null || computer.getPrice().compareTo(BigDecimal.valueOf(100)) < 0 
+                || computer.getPrice().compareTo(BigDecimal.valueOf(100000)) > 0) {
+            result.rejectValue("price", null, "Price must be between 100 and 100,000");
         }
         int year = computer.getProduction_year() == null ? 0 : computer.getProduction_year();
         int currentYear = Year.now().getValue();
         if (year < 1990 || year > currentYear) {
             result.rejectValue("production_year", null, "Year must be between 1990 and " + currentYear);
+        }
+        if (computer.getManufacturer() == null) {
+            result.rejectValue("manufacturer", null, "Manufacturer is required");
         }
         if (result.hasErrors()) {
             model.addAttribute("manufacturers", manufacturerRepository.findAll());
