@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>DE180839 - Login Page</title>
+    <link rel="stylesheet" th:href="@{/style.css}" href="/style.css"/>
+</head>
+<style>
+<!--    body {-->
+<!--        font-family: Arial;-->
+<!--        background-color: #02CAA9;-->
+<!--        color: white;-->
+<!--    }-->
+
+<!--    h1 {-->
+<!--        font-size: 18px;-->
+<!--    }-->
+
+<!--    label, input, button {-->
+<!--        font-size: 13px;-->
+<!--    }-->
+</style>
+<body>
+<div class="login-container">ad
+    <h1>Login</h1>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <!-- Nút Đăng nhập -->
+        <button type="submit" class="btn btn-add">Đăng nhập</button>
+    </form>
+</div>
+</body>
+</html>

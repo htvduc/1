@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add New Computer</title>
+    <link rel="stylesheet" th:href="@{/style.css}" href="/style.css"/>
+</head>
+<body>
+<h1>Add New Computer</h1>
+<form th:action="@{/computers/add}" th:object="${computer}" method="post">
+    <div>
+        <label>Model:</label>
+        <input type="text" th:field="*{computer_model}" required />
+        <span th:if="${#fields.hasErrors('computer_model')}" th:errors="*{computer_model}"></span>
+    </div>
+    <div>
+        <label>Type:</label>
+        <input type="text" th:field="*{type}" required />
+        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+    </div>
+    <div>
+        <label>Production Year:</label>
+        <input type="number" th:field="*{production_year}" required />
+        <span th:if="${#fields.hasErrors('production_year')}" th:errors="*{production_year}"></span>
+    </div>
+    <div>
+        <label>Price:</label>
+        <input type="number" step="0.01" th:field="*{price}" required />
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </div>
+    <div>
+        <label>Manufacturer:</label>
+        <select th:field="*{manufacturer}" required>
+            <option th:each="m : ${manufacturers}" th:value="${m}" th:text="${m.manufacturer_name}"></option>
+        </select>
+    </div>
+    <button type="submit">Add Computer</button>
+</form>
+<a th:href="@{/home}">Back to List</a>
+</body>
+</html> 

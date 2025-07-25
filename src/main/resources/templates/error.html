@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Error</title>
+    <link rel="stylesheet" th:href="@{/style.css}" href="/style.css"/>
+</head>
+<body>
+<div class="error-container">
+    <h1>Error</h1>
+    <p th:text="${error}">You don't have permission to access this function</p>
+    <a th:href="@{/login}" href="/login">Back to Login</a>
+</div>
+</body>
+</html> 

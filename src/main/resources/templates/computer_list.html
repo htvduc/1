@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Computer List</title>
+    <link rel="stylesheet" th:href="@{/style.css}" href="/style.css"/>
+</head>
+<body>
+<h1>All Computers</h1>
+<div th:if="${session.user != null and session.user.role.name() == 'ADMIN'}">
+    <a th:href="@{/computers/add}" class="btn btn-add">Add Computer</a>
+</div>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Computer ID</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Production Year</th>
+        <th>Price</th>
+        <th>Manufacturer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${computers}">
+        <td th:text="${c.computer_id}"></td>
+        <td th:text="${c.computer_model}"></td>
+        <td th:text="${c.type}"></td>
+        <td th:text="${c.production_year}"></td>
+        <td th:text="${c.price}"></td>
+        <td th:text="${c.manufacturer.manufacturer_name}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html> 
